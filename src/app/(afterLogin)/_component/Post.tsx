@@ -1,38 +1,32 @@
-import style from './post.module.css';
-import Link from 'next/link';
-import dayjs from 'dayjs';
-import { faker } from '@faker-js/faker';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/ko';
-import ActionButtons from '@/app/(afterLogin)/_component/ActionButtons';
-import PostArticle from './PostArticle';
-import PostImages from './PostImages';
+import style from './post.module.css'
+import Link from 'next/link'
+import dayjs from 'dayjs'
+import { faker } from '@faker-js/faker'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/ko'
+import ActionButtons from '@/app/(afterLogin)/_component/ActionButtons'
+import PostArticle from './PostArticle'
+import PostImages from './PostImages'
+import { Post } from '@/model/Posts'
 
-dayjs.locale('ko');
-dayjs.extend(relativeTime);
+dayjs.locale('ko')
+dayjs.extend(relativeTime)
 
 type Props = {
-  noImage?: boolean;
-};
+  noImage?: boolean
+  post: Post
+}
 
-export default function Post({ noImage }: Props) {
-  const target = {
-    postId: 1,
-    User: {
-      id: 'elonmusk',
-      nickname: 'Elon Musk',
-      image: '/yRsRRjGO.jpg',
-    },
-    content: '클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ',
-    createdAt: new Date(),
-    Images: [] as any[],
-  };
+export default function Post({ noImage, post }: Props) {
+  const target = post
 
-  if (Math.random() > 0.5) {
-    target.Images.push({ imageId: 1, link: faker.image.urlLoremFlickr() });
-    target.Images.push({ imageId: 2, link: faker.image.urlLoremFlickr() });
-    target.Images.push({ imageId: 3, link: faker.image.urlLoremFlickr() });
-    target.Images.push({ imageId: 4, link: faker.image.urlLoremFlickr() });
+  if (Math.random() > 0.5 && !noImage) {
+    target.Images.push(
+      { imageId: 1, link: faker.image.urlLoremFlickr() },
+      { imageId: 2, link: faker.image.urlLoremFlickr() },
+      { imageId: 3, link: faker.image.urlLoremFlickr() },
+      { imageId: 4, link: faker.image.urlLoremFlickr() }
+    )
   }
   return (
     <PostArticle post={target}>
@@ -57,11 +51,11 @@ export default function Post({ noImage }: Props) {
           </div>
           <div>{target.content}</div>
           <div>
-            <PostImages post={target} />
+            <PostImages post={target} children={undefined} />
           </div>
           <ActionButtons />
         </div>
       </div>
     </PostArticle>
-  );
+  )
 }
