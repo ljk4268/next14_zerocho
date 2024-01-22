@@ -1,6 +1,6 @@
-import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials";
-import {NextResponse} from "next/server";
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { NextResponse } from 'next/server';
 
 export const {
   handlers: { GET, POST },
@@ -15,29 +15,30 @@ export const {
     CredentialsProvider({
       async authorize(credentials) {
         const authResponse = await fetch(`${process.env.AUTH_URL}/api/login`, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             id: credentials.username,
             password: credentials.password,
           }),
-        })
+        });
 
+        console.log(authResponse);
         if (!authResponse.ok) {
-          return null
+          return null;
         }
 
-        const user = await authResponse.json()
+        const user = await authResponse.json();
         console.log('user', user);
         return {
           email: user.id,
           name: user.nickname,
           image: user.image,
           ...user,
-        }
+        };
       },
     }),
-  ]
+  ],
 });

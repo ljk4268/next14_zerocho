@@ -1,19 +1,19 @@
-import style from './post.module.css'
-import Link from 'next/link'
-import dayjs from 'dayjs'
-import { faker } from '@faker-js/faker'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import 'dayjs/locale/ko'
-import ActionButtons from '@/app/(afterLogin)/_component/ActionButtons'
-import PostArticle from './PostArticle'
-import PostImages from './PostImages'
+import style from './post.module.css';
+import Link from 'next/link';
+import dayjs from 'dayjs';
+import { faker } from '@faker-js/faker';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ko';
+import ActionButtons from '@/app/(afterLogin)/_component/ActionButtons';
+import PostArticle from './PostArticle';
+import PostImages from './PostImages';
 
-dayjs.locale('ko')
-dayjs.extend(relativeTime)
+dayjs.locale('ko');
+dayjs.extend(relativeTime);
 
 type Props = {
-  noImage?: boolean
-}
+  noImage?: boolean;
+};
 
 export default function Post({ noImage }: Props) {
   const target = {
@@ -26,13 +26,13 @@ export default function Post({ noImage }: Props) {
     content: '클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ',
     createdAt: new Date(),
     Images: [] as any[],
-  }
+  };
 
   if (Math.random() > 0.5) {
-    target.Images.push({ imageId: 1, link: faker.image.urlLoremFlickr() })
-    target.Images.push({ imageId: 2, link: faker.image.urlLoremFlickr() })
-    target.Images.push({ imageId: 3, link: faker.image.urlLoremFlickr() })
-    target.Images.push({ imageId: 4, link: faker.image.urlLoremFlickr() })
+    target.Images.push({ imageId: 1, link: faker.image.urlLoremFlickr() });
+    target.Images.push({ imageId: 2, link: faker.image.urlLoremFlickr() });
+    target.Images.push({ imageId: 3, link: faker.image.urlLoremFlickr() });
+    target.Images.push({ imageId: 4, link: faker.image.urlLoremFlickr() });
   }
   return (
     <PostArticle post={target}>
@@ -63,5 +63,5 @@ export default function Post({ noImage }: Props) {
         </div>
       </div>
     </PostArticle>
-  )
+  );
 }
